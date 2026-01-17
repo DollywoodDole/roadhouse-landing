@@ -7,9 +7,13 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="vis-overlay" aria-hidden="true"></div>
   <header class="site-header" role="banner">
     <div class="club-insignia" aria-hidden="true">RH &bull; 01</div>
-    <h1 class="wordmark">RoadHouse</h1>
+    <h1 class="wordmark" aria-label="RoadHouse">
+      <span aria-hidden="true" class="wordmark-shadow">RoadHouse</span>
+      <span class="wordmark-main">RoadHouse</span>
+    </h1>
     <p class="tagline">Timeless. Slightly forbidding. Calm under pressure. Where serious people recognize each other instantly.</p>
     <p class="supporting">Discretion and standards are assumed; composure is required.</p>
     <nav class="cta-nav" aria-label="Main">
@@ -22,11 +26,11 @@
     <section id="the-code" class="the-code" tabindex="-1" aria-labelledby="the-code-title">
       <h2 id="the-code-title">The Code</h2>
       <ol class="principles">
-        <li>Standards are lived, not stated.</li>
-        <li>Discretion is the default.</li>
-        <li>Composure under pressure is non-negotiable.</li>
-        <li>Craft is silent, but evident.</li>
-        <li>Restraint reveals strength.</li>
+        <li><span>Standards are lived, not stated.</span></li>
+        <li><span>Discretion is the default.</span></li>
+        <li><span>Composure under pressure is non-negotiable.</span></li>
+        <li><span>Craft is silent, but evident.</span></li>
+        <li><span>Restraint reveals strength.</span></li>
       </ol>
     </section>
   </main>

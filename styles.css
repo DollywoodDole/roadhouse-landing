@@ -1,13 +1,14 @@
 :root {
-  --bg: #161616;
+  --bg: #131313;
   --text: #f5f3ee;
   --text-muted: #b2a98f;
   --accent: #bfa76a;
   --border: #23201a;
-  --gold-translucent: rgba(191, 167, 106, 0.08);
+  --accent-glow: rgba(191, 167, 106, 0.18);
   --grain-size: 1.5px;
-  --spacing: 1.5rem;
+  --spacing: 1.7rem;
   --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Liberation Sans", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "Liberation Mono", Menlo, monospace;
 }
 
 html {
@@ -31,115 +32,165 @@ body {
   flex-direction: column;
   background: var(--bg);
   position: relative;
-  /* Subtle film grain effect */
   z-index: 0;
+  overflow-x: hidden;
 }
 
+/* Subtle animated film grain and vignette overlay */
 body::before {
   content: "";
   pointer-events: none;
   position: fixed;
   inset: 0;
   z-index: 0;
-  opacity: 0.07;
+  opacity: 0.09;
   mix-blend-mode: soft-light;
   background-image:
-    repeating-linear-gradient(135deg, transparent, transparent 2px, var(--gold-translucent) 3px, transparent 4px),
-    repeating-linear-gradient(45deg, transparent, transparent 2px, var(--gold-translucent) 3px, transparent 4px);
+    repeating-linear-gradient(135deg, transparent, transparent 2px, var(--accent-glow) 3px, transparent 4px),
+    repeating-linear-gradient(45deg, transparent, transparent 2px, var(--accent-glow) 3px, transparent 4px);
+  animation: grainmove 2.5s steps(2) infinite alternate;
+}
+@keyframes grainmove {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 8px 12px, -12px 8px; }
 }
 
+/* Vignette effect */
+.vis-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(ellipse at 50% 60%, transparent 60%, rgba(0,0,0,0.45) 100%);
+  opacity: 0.7;
+  mix-blend-mode: multiply;
+}
+
+/* Header */
 .site-header {
-  max-width: 34rem;
+  max-width: 36rem;
   margin: 0 auto;
-  padding: calc(var(--spacing) * 2) var(--spacing) var(--spacing) var(--spacing);
+  padding: calc(var(--spacing) * 2.2) var(--spacing) var(--spacing) var(--spacing);
   text-align: center;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .club-insignia {
-  font-size: 0.95rem;
-  letter-spacing: 0.15em;
+  font-size: 1.05rem;
+  letter-spacing: 0.18em;
   color: var(--accent);
   border-top: 2px solid var(--accent);
-  width: 7.5em;
+  width: 8.5em;
   margin: 0 auto var(--spacing) auto;
   padding-top: 0.5em;
   font-weight: 600;
-  opacity: 0.85;
+  opacity: 0.88;
+  font-family: var(--font-mono);
+  text-shadow: 0 1px 0 #000, 0 0 2px var(--accent-glow);
 }
 
 .wordmark {
-  font-size: 2.5rem;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  margin: 0 0 1.2rem 0;
+  position: relative;
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  margin: 0 0 1.3rem 0;
   color: var(--text);
   text-transform: uppercase;
   line-height: 1.1;
+  font-family: var(--font-main);
+  display: inline-block;
+  isolation: isolate;
+}
+.wordmark-shadow {
+  position: absolute;
+  left: 0; top: 0;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--accent);
+  opacity: 0.22;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(1.5px);
+  user-select: none;
+}
+.wordmark-main {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(90deg, var(--text) 80%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
 
 .tagline {
-  font-size: 1.1rem;
+  font-size: 1.13rem;
   color: var(--text);
-  margin: 0 0 1.2rem 0;
+  margin: 0 0 1.3rem 0;
   font-weight: 400;
   line-height: 1.5;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 0 #000, 0 0 2px var(--accent-glow);
 }
 
 .supporting {
   color: var(--text-muted);
-  font-size: 1rem;
-  margin-bottom: 2.5rem;
+  font-size: 1.01rem;
+  margin-bottom: 2.7rem;
   font-style: italic;
   letter-spacing: 0.01em;
+  text-shadow: 0 1px 0 #000;
 }
 
 .cta-nav {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1.3rem;
   align-items: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.7rem;
 }
 
 .cta-btn {
-  background: none;
+  background: linear-gradient(90deg, rgba(191,167,106,0.09) 0%, rgba(191,167,106,0.03) 100%);
   color: var(--text);
-  border: 2px solid var(--accent);
+  border: 2.5px solid var(--accent);
   border-radius: 0.25em;
-  padding: 0.85em 2.2em;
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  padding: 0.95em 2.5em;
+  font-size: 1.13rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
   cursor: pointer;
-  transition: box-shadow 0.15s, transform 0.12s, background 0.2s;
-  box-shadow: 0 1px 0 var(--border);
+  transition: box-shadow 0.18s, transform 0.13s, background 0.2s, border-color 0.18s;
+  box-shadow: 0 2px 0 var(--border), 0 0 0 0 var(--accent-glow);
   outline: none;
   position: relative;
+  text-shadow: 0 1px 0 #000;
+  will-change: transform, box-shadow;
 }
-
 .cta-btn:focus-visible {
-  box-shadow: 0 0 0 2px var(--accent), 0 1px 0 var(--border);
+  box-shadow: 0 0 0 2.5px var(--accent), 0 2px 0 var(--border);
+  border-color: var(--text);
 }
-
 .cta-btn:hover,
 .cta-btn:active {
-  background: var(--gold-translucent);
-  transform: translateY(-2px) scale(1.01);
+  background: var(--accent-glow);
+  transform: translateY(-2.5px) scale(1.012);
+  border-color: var(--text);
 }
 
 .code-link {
   color: var(--accent);
   text-decoration: none;
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 1.01rem;
+  font-weight: 600;
   letter-spacing: 0.04em;
-  border-bottom: 1px solid var(--accent);
-  padding-bottom: 0.1em;
+  border-bottom: 1.5px solid var(--accent);
+  padding-bottom: 0.12em;
   transition: color 0.15s, border-color 0.15s;
+  font-family: var(--font-mono);
+  text-shadow: 0 1px 0 #000;
 }
-
 .code-link:focus-visible,
 .code-link:hover {
   color: var(--text);
@@ -148,57 +199,89 @@ body::before {
 }
 
 .the-code {
-  max-width: 30rem;
+  max-width: 32rem;
   margin: 0 auto;
-  padding: 5rem var(--spacing) 3rem var(--spacing);
+  padding: 6rem var(--spacing) 3.5rem var(--spacing);
   text-align: left;
+  position: relative;
+  z-index: 2;
 }
-
 .the-code h2 {
-  font-size: 1.3rem;
+  font-size: 1.22rem;
   font-weight: 700;
   color: var(--accent);
-  letter-spacing: 0.08em;
-  margin-bottom: 1.5rem;
+  letter-spacing: 0.09em;
+  margin-bottom: 1.7rem;
   text-transform: uppercase;
+  font-family: var(--font-mono);
+  text-shadow: 0 1px 0 #000;
 }
-
 .principles {
-  list-style: decimal inside;
+  list-style: none;
   padding: 0;
   margin: 0;
   color: var(--text);
-  font-size: 1.05rem;
-  line-height: 2.1;
+  font-size: 1.09rem;
+  line-height: 2.25;
   letter-spacing: 0.01em;
+  counter-reset: code;
+}
+.principles li {
+  position: relative;
+  padding-left: 2.2em;
+  margin-bottom: 0.7em;
+}
+.principles li::before {
+  counter-increment: code;
+  content: "0" counter(code) ".";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 1.05em;
+  font-weight: 600;
+  opacity: 0.85;
+  letter-spacing: 0.08em;
+}
+
+.principles span {
+  background: linear-gradient(90deg, transparent 80%, var(--accent-glow) 100%);
+  padding: 0.05em 0.2em 0.05em 0;
+  border-radius: 0.1em;
 }
 
 .modal {
   display: none;
   position: fixed;
-  z-index: 10;
+  z-index: 20;
   inset: 0;
-  background: rgba(22,22,22,0.92);
+  background: rgba(19,19,19,0.97);
   align-items: center;
   justify-content: center;
   transition: opacity 0.2s;
+  backdrop-filter: blur(2.5px) grayscale(0.12);
 }
-
 .modal[aria-hidden="false"] {
   display: flex;
 }
 
 .modal-content {
   background: var(--bg);
-  border: 1.5px solid var(--accent);
+  border: 2px solid var(--accent);
   border-radius: 0.5em;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.28);
-  padding: 2.5rem 2rem 2rem 2rem;
-  max-width: 95vw;
-  width: 23rem;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.32), 0 0 0 2px var(--accent-glow);
+  padding: 2.7rem 2.2rem 2.2rem 2.2rem;
+  max-width: 97vw;
+  width: 25rem;
   position: relative;
-  z-index: 11;
+  z-index: 21;
   text-align: left;
+  animation: modalIn 0.33s cubic-bezier(.5,1.5,.5,1) 1;
+}
+@keyframes modalIn {
+  0% { opacity: 0; transform: scale(0.96) translateY(30px);}
+  100% { opacity: 1; transform: scale(1) translateY(0);}
 }
 
 .modal-close {
@@ -213,20 +296,21 @@ body::before {
   padding: 0.1em 0.3em;
   border-radius: 0.2em;
   transition: background 0.15s;
+  font-family: var(--font-mono);
 }
-
 .modal-close:focus-visible,
 .modal-close:hover {
-  background: var(--gold-translucent);
+  background: var(--accent-glow);
   outline: none;
 }
 
 .modal-content h2 {
   margin-top: 0;
-  font-size: 1.2rem;
+  font-size: 1.13rem;
   color: var(--accent);
   letter-spacing: 0.07em;
   margin-bottom: 1.5rem;
+  font-family: var(--font-mono);
 }
 
 form label {
@@ -248,15 +332,15 @@ form textarea {
   margin-bottom: 1.2em;
   font-size: 1rem;
   font-family: inherit;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  box-shadow: 0 1px 0 #000;
 }
-
 form input:focus-visible,
 form textarea:focus-visible {
   border-color: var(--accent);
   outline: none;
+  box-shadow: 0 0 0 2px var(--accent-glow);
 }
-
 form textarea {
   resize: vertical;
   min-height: 3em;
@@ -265,20 +349,25 @@ form textarea {
 
 .form-confirmation {
   color: var(--accent);
-  font-size: 1.08rem;
+  font-size: 1.09rem;
   text-align: center;
-  margin-top: 2.5rem;
+  margin-top: 2.7rem;
   min-height: 5em;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 0 #000;
 }
 
 .site-footer {
   margin-top: auto;
-  padding: 2.5rem 0 1.2rem 0;
+  padding: 2.7rem 0 1.2rem 0;
   text-align: center;
-  font-size: 0.95rem;
+  font-size: 0.97rem;
   color: #7a7360;
   letter-spacing: 0.03em;
   opacity: 0.7;
+  font-family: var(--font-mono);
+  z-index: 2;
+  position: relative;
 }
 
 @media (max-width: 600px) {
@@ -288,7 +377,7 @@ form textarea {
   }
   .modal-content {
     padding: 1.2rem 0.7rem 1.2rem 0.7rem;
-    width: 97vw;
+    width: 99vw;
   }
 }
 
