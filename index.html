@@ -1,45 +1,73 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>RoadHouse</title>
+  <meta name="description" content="RoadHouse: Timeless. Slightly forbidding. Calm under pressure. Where serious people recognize each other instantly.">
+  <meta property="og:title" content="RoadHouse">
+  <meta property="og:description" content="Timeless. Slightly forbidding. Calm under pressure. Where serious people recognize each other instantly.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourusername.github.io/roadhouse-landing/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="RoadHouse">
+  <meta name="twitter:description" content="Timeless. Slightly forbidding. Calm under pressure. Where serious people recognize each other instantly.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect width='100%25' height='100%25' fill='black'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' font-family='monospace' font-size='17' fill='white' font-weight='bold' dy='.1em'%3ERH%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="vis-overlay" aria-hidden="true"></div>
+  <div class="grain-overlay" aria-hidden="true"></div>
+  <div class="vignette-overlay" aria-hidden="true"></div>
   <header class="site-header" role="banner">
-    <div class="club-insignia" aria-hidden="true">RH &bull; 01</div>
-    <h1 class="wordmark" aria-label="RoadHouse">
-      <span aria-hidden="true" class="wordmark-shadow">RoadHouse</span>
-      <span class="wordmark-main">RoadHouse</span>
-    </h1>
-    <p class="tagline">Timeless. Slightly forbidding. Calm under pressure. Where serious people recognize each other instantly.</p>
-    <p class="supporting">Discretion and standards are assumed; composure is required.</p>
+    <div class="insignia" aria-hidden="true">RH &bull; 01</div>
+    <h1 class="wordmark" aria-label="RoadHouse">RoadHouse</h1>
+    <p class="tagline" aria-hidden="false">
+      <span>Timeless.</span><br>
+      <span>Slightly forbidding.</span><br>
+      <span>Calm under pressure. Where serious people recognize each other instantly.</span>
+    </p>
+    <p class="supporting">Discretion is assumed. Standards are lived. Composure is required.</p>
     <nav class="cta-nav" aria-label="Main">
       <button id="requestAccessBtn" class="cta-btn" type="button">Request Access</button>
       <a href="#the-code" class="code-link">Read the Code</a>
     </nav>
+    <div class="cta-note" aria-hidden="true">Responses are selective.</div>
   </header>
 
   <main>
     <section id="the-code" class="the-code" tabindex="-1" aria-labelledby="the-code-title">
-      <h2 id="the-code-title">The Code</h2>
-      <ol class="principles">
-        <li><span>Standards are lived, not stated.</span></li>
-        <li><span>Discretion is the default.</span></li>
-        <li><span>Composure under pressure is non-negotiable.</span></li>
-        <li><span>Craft is silent, but evident.</span></li>
-        <li><span>Restraint reveals strength.</span></li>
-      </ol>
+      <h2 id="the-code-title" class="code-title">The Code</h2>
+      <ul class="principles" role="list">
+        <li>
+          <span>Restraint is strength.</span>
+          <div class="divider" aria-hidden="true"></div>
+        </li>
+        <li>
+          <span>Discretion is the default.</span>
+          <div class="divider" aria-hidden="true"></div>
+        </li>
+        <li>
+          <span>Composure is non-negotiable.</span>
+          <div class="divider" aria-hidden="true"></div>
+        </li>
+        <li>
+          <span>Standards are silent, but evident.</span>
+          <div class="divider" aria-hidden="true"></div>
+        </li>
+        <li>
+          <span>Craft is proven, not claimed.</span>
+        </li>
+      </ul>
     </section>
   </main>
 
-  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
-    <div class="modal-content">
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc" aria-hidden="true">
+    <div class="modal-backdrop" tabindex="-1"></div>
+    <div class="modal-content" role="document">
       <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
       <h2 id="modal-title">Request Access</h2>
-      <form id="accessForm" novalidate>
+      <form id="accessForm" novalidate aria-describedby="modal-desc">
         <label for="name">Name<span aria-hidden="true">*</span></label>
         <input id="name" name="name" type="text" required autocomplete="name" />
 
@@ -51,6 +79,7 @@
 
         <button type="submit" class="cta-btn">Send</button>
       </form>
+      <div id="formSending" class="form-sending" hidden>Sending…</div>
       <div id="formConfirmation" class="form-confirmation" tabindex="-1" hidden>
         <p>Your request has been received.<br>We will be in touch if standards align.</p>
       </div>
