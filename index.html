@@ -1,94 +1,816 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>RoadHouse</title>
-  <meta name="description" content="RoadHouse: Timeless. Slightly forbidding. Calm under pressure. Where serious people recognize each other instantly.">
-  <meta property="og:title" content="RoadHouse">
-  <meta property="og:description" content="Timeless. Slightly forbidding. Calm under pressure. Where serious people recognize each other instantly.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yourusername.github.io/roadhouse-landing/">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="RoadHouse">
-  <meta name="twitter:description" content="Timeless. Slightly forbidding. Calm under pressure. Where serious people recognize each other instantly.">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect width='100%25' height='100%25' fill='black'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' font-family='monospace' font-size='17' fill='white' font-weight='bold' dy='.1em'%3ERH%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoadHouse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --stone-50: #fafaf9;
+            --stone-100: #f5f5f4;
+            --stone-200: #e7e5e4;
+            --stone-300: #d6d3d1;
+            --stone-400: #a8a29e;
+            --stone-500: #78716c;
+            --stone-600: #57534e;
+            --stone-700: #44403c;
+            --stone-800: #292524;
+            --stone-900: #1c1917;
+            --stone-950: #0c0a09;
+            
+            --accent-gold: #d4af37;
+            --accent-gold-dim: #8b7625;
+            --accent-copper: #b87333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: var(--stone-950);
+            color: var(--stone-200);
+            line-height: 1.8;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Atmospheric grain texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            z-index: 1;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Vignette effect */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(12, 10, 9, 0.4) 100%);
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Header with subtle parallax effect */
+        header {
+            position: relative;
+            text-align: center;
+            margin-bottom: 8rem;
+            padding-top: 4rem;
+            animation: fadeInDown 1.2s ease-out;
+        }
+
+        .header-mark {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.4em;
+            color: var(--accent-gold-dim);
+            font-weight: 400;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.3s forwards;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 500;
+            font-style: italic;
+            letter-spacing: -0.02em;
+            color: var(--stone-50);
+            margin-bottom: 0.5rem;
+            position: relative;
+            line-height: 0.95;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 4rem;
+            background: linear-gradient(to bottom, var(--accent-gold), transparent);
+            opacity: 0;
+            animation: lineGrow 1s ease-out 0.8s forwards;
+        }
+
+        /* Hero section */
+        .hero {
+            text-align: center;
+            margin-bottom: 6rem;
+            padding: 0 2rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.6s forwards;
+        }
+
+        .tagline {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            line-height: 1.6;
+            color: var(--stone-300);
+            font-weight: 300;
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        .tagline em {
+            color: var(--stone-100);
+            font-style: normal;
+            position: relative;
+        }
+
+        .description {
+            font-size: clamp(1rem, 2vw, 1.125rem);
+            line-height: 1.9;
+            color: var(--stone-400);
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            font-weight: 300;
+        }
+
+        /* CTA Buttons */
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            font-family: 'Bodoni Moda', serif;
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--stone-50);
+            color: var(--stone-950);
+            border: 1px solid var(--stone-50);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-gold);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .btn-primary:hover::before {
+            left: 0;
+        }
+
+        .btn-primary:hover {
+            color: var(--stone-950);
+            border-color: var(--accent-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--stone-300);
+            border: 1px solid var(--stone-600);
+        }
+
+        .btn-secondary:hover {
+            color: var(--accent-gold);
+            border-color: var(--accent-gold-dim);
+            transform: translateY(-2px);
+        }
+
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--stone-600);
+            letter-spacing: 0.05em;
+            font-style: italic;
+            margin-top: 2rem;
+        }
+
+        /* The Code Section */
+        .code-section {
+            margin: 8rem 0;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--stone-800);
+            border-bottom: 1px solid var(--stone-800);
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .code-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .code-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--accent-gold-dim), transparent);
+            opacity: 0.3;
+        }
+
+        .code-section h2 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--stone-100);
+            letter-spacing: 0.05em;
+            font-style: italic;
+        }
+
+        .code-list {
+            list-style: none;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .code-list li {
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--stone-900);
+            position: relative;
+            padding-left: 3rem;
+            color: var(--stone-300);
+            transition: all 0.3s ease;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .code-list li:last-child {
+            border-bottom: none;
+        }
+
+        .code-list li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold-dim);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .code-list li:hover {
+            color: var(--stone-100);
+            padding-left: 3.5rem;
+        }
+
+        .code-list li:hover::before {
+            color: var(--accent-gold);
+            left: 0.5rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(12, 10, 9, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .modal-content {
+            background: var(--stone-900);
+            padding: 3rem;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            border: 1px solid var(--stone-800);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px);
+            animation: slideUp 0.4s ease forwards;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--stone-500);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            line-height: 1;
+            padding: 0;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: var(--accent-gold);
+            transform: rotate(90deg);
+        }
+
+        .modal h2 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--stone-100);
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            color: var(--stone-400);
+            font-family: 'Bodoni Moda', serif;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--stone-950);
+            border: 1px solid var(--stone-800);
+            color: var(--stone-200);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold-dim);
+            box-shadow: 0 0 0 1px var(--accent-gold-dim);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: var(--stone-700);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .error {
+            color: var(--accent-copper);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .form-group.invalid .error {
+            display: block;
+        }
+
+        .form-group.invalid input,
+        .form-group.invalid textarea {
+            border-color: var(--accent-copper);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1.25rem;
+            background: var(--stone-50);
+            color: var(--stone-950);
+            border: 1px solid var(--stone-50);
+            font-family: 'Bodoni Moda', serif;
+            font-size: 1rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-gold);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn-submit:hover::before {
+            left: 0;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: var(--stone-300);
+            font-size: 1.125rem;
+            line-height: 1.8;
+        }
+
+        .success-message.active {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--stone-600);
+            font-size: 0.875rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-top: 1px solid var(--stone-900);
+            margin-top: 8rem;
+        }
+
+        footer::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 1px;
+            background: var(--accent-gold-dim);
+            margin: 0 auto 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes lineGrow {
+            from {
+                opacity: 0;
+                height: 0;
+            }
+            to {
+                opacity: 0.5;
+                height: 4rem;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+
+            header {
+                margin-bottom: 4rem;
+            }
+
+            .cta-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .modal-content {
+                padding: 2rem;
+            }
+
+            .code-list li {
+                font-size: 1.125rem;
+                padding: 1.5rem 0 1.5rem 2rem;
+            }
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
-  <div class="grain-overlay" aria-hidden="true"></div>
-  <div class="vignette-overlay" aria-hidden="true"></div>
-  <header class="site-header" role="banner">
-    <div class="insignia" aria-hidden="true">RH &bull; 01</div>
-    <h1 class="wordmark" aria-label="RoadHouse">RoadHouse</h1>
-    <p class="tagline" aria-hidden="false">
-      <span>Timeless.</span><br>
-      <span>Slightly forbidding.</span><br>
-      <span>Calm under pressure. Where serious people recognize each other instantly.</span>
-    </p>
-    <p class="supporting">Discretion is assumed. Standards are lived. Composure is required.</p>
-    <nav class="cta-nav" aria-label="Main">
-      <button id="requestAccessBtn" class="cta-btn" type="button">Request Access</button>
-      <a href="#the-code" class="code-link">Read the Code</a>
-    </nav>
-    <div class="cta-note" aria-hidden="true">Responses are selective.</div>
-  </header>
+    <div class="container">
+        <header>
+            <div class="header-mark">RH • 01</div>
+            <h1>RoadHouse</h1>
+        </header>
 
-  <main>
-    <section id="the-code" class="the-code" tabindex="-1" aria-labelledby="the-code-title">
-      <h2 id="the-code-title" class="code-title">The Code</h2>
-      <ul class="principles" role="list">
-        <li>
-          <span>Restraint is strength.</span>
-          <div class="divider" aria-hidden="true"></div>
-        </li>
-        <li>
-          <span>Discretion is the default.</span>
-          <div class="divider" aria-hidden="true"></div>
-        </li>
-        <li>
-          <span>Composure is non-negotiable.</span>
-          <div class="divider" aria-hidden="true"></div>
-        </li>
-        <li>
-          <span>Standards are silent, but evident.</span>
-          <div class="divider" aria-hidden="true"></div>
-        </li>
-        <li>
-          <span>Craft is proven, not claimed.</span>
-        </li>
-      </ul>
-    </section>
-  </main>
+        <section class="hero">
+            <p class="tagline">
+                <em>Timeless.</em><br>
+                Slightly forbidding.<br>
+                <em>Calm under pressure.</em>
+            </p>
+            <p class="description">
+                Where serious people recognize each other instantly. Discretion is assumed. Standards are lived. Composure is required.
+            </p>
+            <div class="cta-group">
+                <button class="btn btn-primary" onclick="openModal()">Request Access</button>
+                <a href="#the-code" class="btn btn-secondary">Read the Code</a>
+            </div>
+            <p class="footnote">Responses are selective.</p>
+        </section>
 
-  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc" aria-hidden="true">
-    <div class="modal-backdrop" tabindex="-1"></div>
-    <div class="modal-content" role="document">
-      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
-      <h2 id="modal-title">Request Access</h2>
-      <form id="accessForm" novalidate aria-describedby="modal-desc">
-        <label for="name">Name<span aria-hidden="true">*</span></label>
-        <input id="name" name="name" type="text" required autocomplete="name" />
+        <section id="the-code" class="code-section reveal">
+            <h2>The Code</h2>
+            <ul class="code-list">
+                <li>Restraint is strength.</li>
+                <li>Discretion is the default.</li>
+                <li>Composure is non-negotiable.</li>
+                <li>Standards are silent, but evident.</li>
+                <li>Craft is proven, not claimed.</li>
+            </ul>
+        </section>
 
-        <label for="email">Email<span aria-hidden="true">*</span></label>
-        <input id="email" name="email" type="email" required autocomplete="email" />
-
-        <label for="why">Why do you belong here?<span aria-hidden="true">*</span></label>
-        <textarea id="why" name="why" required rows="3"></textarea>
-
-        <button type="submit" class="cta-btn">Send</button>
-      </form>
-      <div id="formSending" class="form-sending" hidden>Sending…</div>
-      <div id="formConfirmation" class="form-confirmation" tabindex="-1" hidden>
-        <p>Your request has been received.<br>We will be in touch if standards align.</p>
-      </div>
+        <footer>
+            Saskatchewan-born. Worldwide standard.
+        </footer>
     </div>
-  </div>
 
-  <footer class="site-footer">
-    <small>Saskatchewan-born. Worldwide standard.</small>
-  </footer>
-  <script src="script.js"></script>
+    <!-- Modal -->
+    <div id="accessModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            
+            <div id="formContainer">
+                <h2>Request Access</h2>
+                <form id="accessForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Name*</label>
+                        <input type="text" id="name" name="name" required>
+                        <div class="error">Please enter your name</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email*</label>
+                        <input type="email" id="email" name="email" required>
+                        <div class="error">Please enter a valid email address</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Why do you belong here?*</label>
+                        <textarea id="message" name="message" required placeholder="Standards speak for themselves..."></textarea>
+                        <div class="error">Please share why you belong</div>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <span id="submitText">Send</span>
+                    </button>
+                </form>
+            </div>
+
+            <div id="successMessage" class="success-message">
+                <p>Your request has been received.</p>
+                <p>We will be in touch if standards align.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll reveal
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('accessModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('accessModal').classList.remove('active');
+            document.body.style.overflow = '';
+            resetForm();
+        }
+
+        // Close modal on outside click
+        document.getElementById('accessModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Form validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('invalid');
+            });
+
+            let isValid = true;
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const message = document.getElementById('message');
+
+            // Validate name
+            if (!name.value.trim()) {
+                name.closest('.form-group').classList.add('invalid');
+                isValid = false;
+            }
+
+            // Validate email
+            if (!validateEmail(email.value)) {
+                email.closest('.form-group').classList.add('invalid');
+                isValid = false;
+            }
+
+            // Validate message
+            if (!message.value.trim() || message.value.trim().length < 10) {
+                message.closest('.form-group').classList.add('invalid');
+                const errorMsg = message.closest('.form-group').querySelector('.error');
+                errorMsg.textContent = 'Please provide a meaningful response (at least 10 characters)';
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Simulate form submission
+                const submitBtn = document.getElementById('submitBtn');
+                submitBtn.disabled = true;
+                document.getElementById('submitText').textContent = 'Sending...';
+
+                // Simulate API call
+                setTimeout(() => {
+                    document.getElementById('formContainer').style.display = 'none';
+                    document.getElementById('successMessage').classList.add('active');
+                    
+                    // Auto-close after 3 seconds
+                    setTimeout(() => {
+                        closeModal();
+                    }, 3000);
+                }, 1000);
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('accessForm').reset();
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('invalid');
+            });
+            document.getElementById('formContainer').style.display = 'block';
+            document.getElementById('successMessage').classList.remove('active');
+            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('submitText').textContent = 'Send';
+        }
+
+        // Add subtle parallax effect to header
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            const header = document.querySelector('header');
+            
+            if (header) {
+                header.style.transform = `translateY(${currentScroll * 0.3}px)`;
+                header.style.opacity = 1 - (currentScroll / 500);
+            }
+            
+            lastScroll = currentScroll;
+        });
+    </script>
 </body>
 </html>
