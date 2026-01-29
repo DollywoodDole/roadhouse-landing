@@ -160,6 +160,23 @@ h1::after {
     line-height: 1;
 }
 
+/* Header Image */
+.header-image-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 3rem auto 4rem;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 1.2s forwards;
+}
+
+.header-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--stone-800);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
 .member-label {
     font-size: 0.875rem;
     color: var(--stone-500);
@@ -949,6 +966,10 @@ footer::before {
 
     header {
         margin-bottom: 4rem;
+    }
+
+    .header-image-container {
+        margin: 2rem auto 3rem;
     }
 
     .cta-group {
