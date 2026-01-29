@@ -224,7 +224,7 @@
             
             <div id="formContainer">
                 <h2>Request Access</h2>
-                <form id="accessForm" onsubmit="handleSubmit(event)">
+                <form id="accessForm" action="https://formsubmit.co/el/nijepo" method="POST" onsubmit="handleSubmit(event)">
                     <div class="form-group">
                         <label for="name">Name*</label>
                         <input type="text" id="name" name="name" required>
@@ -256,6 +256,14 @@
                         <textarea id="message" name="message" required placeholder="Standards speak for themselves..."></textarea>
                         <div class="error">Please share why you belong</div>
                     </div>
+
+                    <!-- Recommended hidden fields for better control & spam protection -->
+                    <input type="hidden" name="_subject" value="New Access Request">
+                    <input type="hidden" name="_captcha" value="true">
+                    <!-- Optional auto-reply to the submitter -->
+                    <input type="hidden" name="_autoresponse" value="Thanks for your request! We'll review it and reach out if your standards align with ours.">
+                    <!-- Optional: Make replies go back to the submitter -->
+                    <input type="hidden" name="_replyto" value="email">
 
                     <button type="submit" class="btn-submit" id="submitBtn">
                         <span id="submitText">Send</span>
